@@ -1,7 +1,7 @@
 \section{Задача}
 
 \begin{problem}
-    Візьмемо $F(x) = M x + q$, де матриця $M$ генерується випадковим чином і має наступний  вигляд:
+    Візьмемо $F(x) = M x + q$, де матриця $M$ генерується наступний чином:
     \begin{equation}
         M = A A^\intercal + B + D,
     \end{equation}
@@ -12,7 +12,7 @@
     а за початкове наближення береться $x_1 = (1, \dots, 1)$. Для цієї задачі $L = \no{M}$, $\epsilon = 10^{-3}$.
 \end{problem}
 
-\section{Алгоритм проектування}
+\subsection{Алгоритм проектування}
 
 % Допустима множина цієї задачі --- так званий \emph{probability symplex} (з точністю до константи $m$). Для проектування $\vec y$ на нього ми використовували наступний явний
 \begin{algorithm}\nothing
@@ -26,7 +26,7 @@
 
 \emph{Цей алгоритм взято із статті} \href{https://arxiv.org/pdf/1309.1541v1.pdf}{[Weiran Wang, Miguel A. Carreira-Perpi\~n\'an, 2013]}, хоча він зустрічається у літературі і раніше.
 
-\section{Приклад клієнтського коду}
+\subsection{Приклад клієнтського коду}
 
 \begin{minted}[linenos,fontsize=\tiny]{python}
 def ProjectionOntoProbabilitySymplex(x: np.array) -> np.array:
