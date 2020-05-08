@@ -1,0 +1,102 @@
+\chapter{Адаптивні алгоритми}
+
+Не так давно з'явилися адаптивні алгоритми, тобто такі, що не вимагають знання константи Ліпшиця. Наведемо адаптивні версії розгялнутих раніше алгоритмів:
+
+\begin{algorithm}[Адаптивний Корпелевич]
+    \label{algo:adapt-korpelevich}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1$, $\tau \in (0, 1)$, $\lambda \in (0, +\infty)$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок 1.} Обчислюємо
+    \begin{equation}
+        y_n = P_C (x_n - \lambda A x_n).
+    \end{equation}
+    
+    Якщо $x_n = y_n$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше переходимо на \medskip
+    
+    \textbf{Крок 2.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = P_C (x_n - \lambda A y_n).
+    \end{equation}
+    
+    \textbf{Крок 3.} Обчислюємо
+    \begin{equation}
+        \lambda_{n + 1} = \begin{cases}
+            \lambda_n, \text{ якщо } \sp{A x_n - A y_n, x_{n + 1} - y_n} \le 0, \\
+            \min \left\{ \lambda_n, \dfrac{\tau}{2} \dfrac{\no{x_n - y_n}^2 + \no{x_{n + 1} - y_n}^2}{\sp{A x_n - A y_n, x_{n + 1} - y_n}} \right\}, \text{ інакше}.
+        \end{cases}
+    \end{equation}
+    покладаємо $n \coloneqq n + 1$ і переходимо на \textbf{Крок 1.}
+\end{algorithm}
+
+\begin{remark}
+    У алгоритмі \ref{algo:adapt-korpelevich} можна робити і так:
+        \begin{equation}
+            \lambda_{n + 1} = \begin{cases}
+                \lambda_n, \text{ якщо } A x_n - A y_n = 0, \\
+                \min \left\{ \lambda_n, \tau \dfrac{\no{x_n - y_n}}{\no{A x_n - A y_n}} \right\}, \text{ інакше}.
+            \end{cases}
+        \end{equation}
+\end{remark}
+
+\begin{algorithm}[Адаптивний Tseng]
+    \label{algo:adapt-tseng}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1$, $\tau \in (0, 1)$, $\lambda \in (0, +\infty)$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок 1.} Обчислюємо
+    \begin{equation}
+        y_n = P_C (x_n - \lambda A x_n).
+    \end{equation}
+    
+    Якщо $x_n = y_n$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше переходимо на \medskip
+    
+    \textbf{Крок 2.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = y_n - \lambda (A y_n - A x_n),
+    \end{equation}
+    
+    \textbf{Крок 3.} Обчислюємо
+    \begin{equation}
+        \lambda_{n + 1} = \begin{cases}
+            \lambda_n, \text{ якщо } A x_n - A y_n = 0, \\
+            \min \left\{ \lambda_n, \tau \dfrac{\no{x_n - y_n}}{\no{A x_n - A y_n}} \right\}, \text{ інакше}.
+        \end{cases}
+    \end{equation}
+    покладаємо $n \coloneqq n + 1$ і переходимо на \textbf{Крок 1.}
+\end{algorithm}
+
+\begin{algorithm}[Адаптивний Попов]
+    \label{algo:adapt-popov}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1$, $y_0$, $\tau \in (0, \frac{1}{3})$, $\lambda \in (0, +\infty)$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок 1.} Обчислюємо
+    \begin{equation}
+        y_n = P_C (x_n - \lambda A y_{n - 1}).
+    \end{equation}
+        
+    \textbf{Крок 2.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = P_C (x_n - \lambda A y_n).
+    \end{equation}
+    
+    Якщо $x_{n + 1} = x_n = y_n$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше переходимо на \medskip
+    
+    \textbf{Крок 3.} Обчислюємо
+    \begin{equation}
+        \lambda_{n + 1} = \begin{cases}
+            \lambda_n, \text{ якщо } \sp{A y_{n - 1} - A y_n, x_{n + 1} - y_n} \le 0, \\
+            \min \left\{ \lambda_n, \dfrac{\tau}{2} \dfrac{\no{y_{n- 1} - y_n}^2 + \no{x_{n + 1} - y_n}^2}{\sp{A y_{n - 1} - A y_n, x_{n + 1} - y_n}} \right\}, \text{ інакше}.
+        \end{cases}
+    \end{equation}
+    покладаємо $n \coloneqq n + 1$ і переходимо на \textbf{Крок 1.}
+\end{algorithm}
+
+\begin{remark}
+    У алгоритмі \ref{algo:adapt-popov} можна робити і так:
+        \begin{equation}
+            \lambda_{n + 1} = \begin{cases}
+                \lambda_n, \text{ якщо } A y_{n - 1} - A y_n = 0, \\
+                \min \left\{ \lambda_n, \tau \dfrac{\no{y_{n - 1} - y_n}}{\no{A y_{n - 1} - A y_n}} \right\}, \text{ інакше}.
+            \end{cases}
+        \end{equation}
+\end{remark}
+

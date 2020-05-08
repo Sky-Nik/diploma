@@ -1,0 +1,33 @@
+\theoremstyle{definition}
+\newtheorem{theorem}{Теорема}
+\newtheorem*{theorem*}{Теорема}
+\newtheorem{lemma}{Лема}
+\newtheorem*{lemma*}{Лема}
+\newtheorem{proposition}{Твердження}
+\newtheorem{algorithm}{Алгоритм}
+\newtheorem*{example}{Приклад}
+\newtheorem*{remark}{Зауваження}
+\newtheorem*{assumption}{Припущення}
+\newtheorem*{definition}{Визначення}
+\newtheorem{problem}{Задача}
+
+\makeatletter
+\newenvironment{solution}[1][\solutionname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+%<amsbook|amsproc>  \itemindent\normalparindent
+  \item[\hskip\labelsep
+%<amsbook|amsproc>        \scshape
+%<amsart|amsthm>        \itshape
+\itshape 
+    #1\@addpunct{.}]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+%    \end{macrocode}
+%    Default for \cn{proofname}:
+%    \begin{macrocode}
+\providecommand{\solutionname}{Розв'язок}
+
+\makeatother

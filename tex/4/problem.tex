@@ -1,0 +1,24 @@
+\chapter{Ще одна задача}
+
+\begin{problem}
+    \begin{equation}
+        \begin{aligned}
+            F(x) &= F_1(x) + F_2(x), \\
+            F_1(x) &= (f_1(x), f_2(x), \dots, f_m(x)), \\
+            F_2(x) &= D x + c, \\
+            f_i(x) &= x_{i - 1}^2 + x_i^2 + x_{i - 1} x_i + x_i x_{i + 1}, \quad m = 1, 2, \dots, m, \\
+            x_0 &= x_{m + 1} = 0,
+        \end{aligned}
+    \end{equation}
+    де $D$ --- квадратна $m \times m$ матриця з наступними елементами:
+    \begin{equation}
+        d_{i,j} &= \begin{cases}
+            4, & i = j, \\
+            1, & i - j = 1, \\
+            -2, & i - j = -1, \\
+            0, & \text{інакше},
+        \end{cases}
+    \end{equation}
+    $c = (-1, -1, \dots, -1)$. Допустимою множиною є $C = \RR_+^m$, а початкова точка $x_1 = (0, 0, \dots, 0)$.
+\end{problem}
+

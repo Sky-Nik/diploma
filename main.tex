@@ -1,0 +1,72 @@
+\documentclass[a4paper,14pt,openany,oneside,oldfontcommands]{memoir}
+\input{sty/use.sty}
+\input{sty/th.bw.sty}
+\input{sty/cmd.sty}
+
+\geometry{left=2.5cm,right=1.0cm,top=2.0cm,bottom=2.0cm}
+\hypersetup{colorlinks,linkcolor={blue},citecolor={blue!50!black},urlcolor={blue!80!black}}
+
+\setmainfont{Times New Roman}
+\setlength{\parindent}{1.27cm}
+\OnehalfSpacing \OnehalfSpacing*
+\setlist[itemize]{nosep}
+\setlist[enumerate]{nosep}
+
+\renewcommand{\printtoctitle}{\centering\bfseries\MakeUppercase}
+\renewcommand{\printchapternonum}{\centering}
+\renewcommand{\printchaptername}[3]{\centering \textbf{\thechapter \ }}
+\renewcommand{\chaptitlefont}{\normalfont\bfseries}
+\setsecheadstyle{\normalfont\bfseries}   
+\setsubsecheadstyle{\normalfont\bfseries}
+
+\setlength{\beforechapskip}{0pt}
+\setlength{\afterchapskip}{20pt}
+
+\fancypagestyle{plain}{%
+  \fancyhf{} % clear all header and footer fields
+  \fancyhead[R]{\thepage} %RO=right odd, RE=right even
+  \fancyhead[L]{}
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+\pagestyle{plain}
+
+\begin{document}
+
+\pagenumbering{gobble}
+\input{tex/title} 
+\newpage
+\tableofcontents
+\newpage
+
+\pagenumbering{arabic}
+\setcounter{page}{3}
+
+\input{tex/intro}
+\newpage
+
+\input{tex/simple-algorithms}
+\newpage
+\input{tex/simple-code}
+\newpage
+
+\input{tex/simple-problem}
+\newpage
+\input{tex/simple-results}
+\newpage
+
+
+\input{tex/medium-problem}
+\newpage
+\input{tex/medium-results}
+\newpage
+
+
+\input{tex/adaptive-algorithms}
+\newpage
+\input{tex/adaptive-code}
+\newpage
+\input{tex/adaptive-results}
+\newpage
+
+\end{document}

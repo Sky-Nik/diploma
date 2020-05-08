@@ -1,0 +1,48 @@
+\chapter{Результати адаптивних алгоритмів}
+
+\section{Проста тестова задача}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.75\textwidth]{img/1/adapt/time.png}
+\end{figure}
+
+Та сама інформація у табличці, для зручності:
+
+\input{tbl/1/adapt/time.tex}
+
+Алгоритма Попова програє своїй неадаптивній версії. Окрім цього, некешовані версії адаптивних алгоритмів явно програють кешованим. Кешовані версії адаптивних алгоритмів Корпелевич і Tseng'a не поступаються кешованим неадаптивним версіям. \medskip
+
+Щодо кількості ітерацій ситуація схожа:
+
+\input{tbl/1/adapt/iter.tex}
+
+\section{Проста тестова задача із розрідженими матрицями}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.75\textwidth]{img/1/sparse/adapt/time.png}
+\end{figure}
+
+Та сама інформація у табличці:
+
+\input{tbl/1/sparse/adapt/time.tex}
+
+\input{tbl/1/sparse/adapt/iter.tex}
+
+Ситуація доволі схожа на попередню, за виключення того що алгоритм Попва тепер не так суттєво програє неадаптивній версії.
+
+\section{Середня тестова задача}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.75\textwidth]{img/2/adapt/time.png}
+\end{figure}
+
+Та сама інформація у табличці:
+
+\input{tbl/2/adapt/time.tex}
+
+Адаптивні версії суттєво випереджають неадаптивні, причому за числом ітерацій також:
+
+\input{tbl/2/adapt/iter.tex}

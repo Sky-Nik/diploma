@@ -1,0 +1,57 @@
+\chapter{Прості алгоритми}
+
+Серед різноманіття алгоритмів розв'язування \eqref{eq:variational-inequality} розглянемо три базових:
+
+\begin{algorithm}[Корпелевич]
+    \label{algo:korpelevich}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1$, $\lambda \in \left( 0, \frac{1}{L} \right)$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок 1.} Обчислюємо
+    \begin{equation}
+        y_n = P_C (x_n - \lambda A x_n).
+    \end{equation}
+    
+    Якщо $x_n = y_n$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше переходимо на \medskip
+    
+    \textbf{Крок 2.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = P_C (x_n - \lambda A y_n),
+    \end{equation}
+    покладаємо $n \coloneqq n + 1$ і переходимо на \textbf{Крок 1.}
+\end{algorithm}
+
+\begin{algorithm}[P. Tseng]
+    \label{algo:tseng}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1$, $\lambda \in \left( 0, \frac{1}{L} \right)$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок 1.} Обчислюємо
+    \begin{equation}
+        y_n = P_C (x_n - \lambda A x_n).
+    \end{equation}
+    
+    Якщо $x_n = y_n$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше переходимо на \medskip
+    
+    \textbf{Крок 2.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = y_n - \lambda (A y_n - A x_n),
+    \end{equation}
+    покладаємо $n \coloneqq n + 1$ і переходимо на \textbf{Крок 1.}
+\end{algorithm}
+
+\begin{algorithm}[Попов]
+    \label{algo:popov}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1$, $y_0$, $\lambda \in \left( 0, \frac{1}{3L} \right)$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок 1.} Обчислюємо
+    \begin{equation}
+        y_n = P_C (x_n - \lambda A y_{n - 1}).
+    \end{equation}
+    
+    \textbf{Крок 2.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = P_C (x_n - \lambda A y_n).
+    \end{equation}
+    
+    Якщо $x_{n + 1} = x_n = y_n$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше покладаємо $n \coloneqq n + 1$ і переходимо на \textbf{Крок 1.}
+\end{algorithm}
+
