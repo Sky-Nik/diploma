@@ -1,0 +1,42 @@
+\section{Алгоритм}
+
+\begin{algorithm}
+    \label{algo:malitsky-tam}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1, x_0 \in H$, $\lambda \in (0, \frac{1}{2L})$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = P_C (x_n - \lambda A x_n - \lambda (A x_n - A x_{n - 1})).
+    \end{equation}
+    
+    Якщо $x_{n + 1} = x_n = x_{n - 1}$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше покладаємо $n \coloneqq n + 1$, і повторюємо
+\end{algorithm}
+
+\begin{algorithm}
+    \label{algo:adapt-malitsky-tam}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1, x_0 \in H$, $\lambda_1, \lambda_0 > 0$, $\tau \in (0, \frac{1}{2})$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок 1.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = P_C (x_n - \lambda A x_n - \lambda (A x_n - A x_{n - 1})).
+    \end{equation}
+    
+    Якщо $x_{n + 1} = x_n = x_{n - 1}$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше переходимо на \medskip
+
+    \textbf{Крок 2.} Обчислюємо
+    \begin{equation}
+        \lambda_{n + 1} = \min \left\{ \lambda_ n, \tau  \frac{\|x_{n + 1} - x_n\|}{\|A x_{n + 1} - A x_n} \right\},
+    \end{equation}
+    покладаємо $n \coloneqq n + 1$ і переходимо на \textbf{Крок 1.}
+\end{algorithm}
+
+\begin{remark}
+    Чи можна покладати
+    \begin{equation}
+        \lambda_{n + 1} = \begin{cases}
+            \lambda_n, \text{ якщо } \sp{A x_n - A x_{n - 1}, x_n - x_{n + 1}} \le 0, \\
+            \min \left\{ \lambda_n, \dfrac{\tau}{2} \dfrac{\no{x_{n + 1} - x_n}^2 + \no{x_n - x_{n - 1}}^2}{\sp{A x_n - A x_{n - 1}, x_n - x_{n + 1}}} \right\}, \text{ інакше}?
+        \end{cases}
+    \end{equation}
+\end{remark}
+
