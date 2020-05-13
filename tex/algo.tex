@@ -1,0 +1,200 @@
+\section{Класичні алгоритми}
+
+Серед різноманіття алгоритмів розв'язування \eqref{eq:variational-inequality} розглянемо три базових:
+
+\begin{algorithm}[Корпелевич]
+    \label{algo:korpelevich}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1$, $\lambda \in \left( 0, \frac{1}{L} \right)$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок 1.} Обчислюємо
+    \begin{equation}
+        y_n = P_C (x_n - \lambda A x_n).
+    \end{equation}
+    
+    Якщо $x_n = y_n$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше переходимо на \medskip
+    
+    \textbf{Крок 2.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = P_C (x_n - \lambda A y_n),
+    \end{equation}
+    покладаємо $n \coloneqq n + 1$ і переходимо на \textbf{Крок 1.}
+\end{algorithm}
+
+\begin{algorithm}[P. Tseng]
+    \label{algo:tseng}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1$, $\lambda \in \left( 0, \frac{1}{L} \right)$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок 1.} Обчислюємо
+    \begin{equation}
+        y_n = P_C (x_n - \lambda A x_n).
+    \end{equation}
+    
+    Якщо $x_n = y_n$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше переходимо на \medskip
+    
+    \textbf{Крок 2.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = y_n - \lambda (A y_n - A x_n),
+    \end{equation}
+    покладаємо $n \coloneqq n + 1$ і переходимо на \textbf{Крок 1.}
+\end{algorithm}
+
+\begin{algorithm}[Попов]
+    \label{algo:popov}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1$, $y_0$, $\lambda \in \left( 0, \frac{1}{3L} \right)$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок 1.} Обчислюємо
+    \begin{equation}
+        y_n = P_C (x_n - \lambda A y_{n - 1}).
+    \end{equation}
+    
+    \textbf{Крок 2.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = P_C (x_n - \lambda A y_n).
+    \end{equation}
+    
+    Якщо $x_{n + 1} = x_n = y_n$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше покладаємо $n \coloneqq n + 1$ і переходимо на \textbf{Крок 1.}
+\end{algorithm}
+
+\begin{remark}
+    У наведеному вище вигляді алгоритми Tseng'a і Попова обчислюють оператор $A$ тричі і двічі на кожну ітерацію відповідно. На цьому можна заощадити якщо кешувати обчислення оператора $A$. У випадку алгоритма Tseng'a спосіб кешування очевидний: один раз обчислюємо $A x_n$ і двічі використовуємо його (для $y_n$ та $x_{n + 1}$). У випадку алгоритма Попова кешування допомагає за рахунок того, що значення $A y_n$ використовується один раз на ітерації $n$ для обчислення $x_{n + 1}$, і ще раз на ітерації $n + 1$ для обчислення значення $y_{n + 1}$. \medskip
+    
+    В теорії, у випадку коли $P_C$ обчислювати дешево (наприклад, коли це можливо аналітично), а $A$ обчислювати дорого, такий трюк допомагає пришвидшити алгоритм Tseng'a у 1.5, а алгоритм Попова --- у 2 рази.
+\end{remark}
+
+
+\section{Адаптивні алгоритми}
+
+Не так давно з'явилися адаптивні алгоритми, тобто такі, що не вимагають знання константи Ліпшиця. Наведемо адаптивні версії розгялнутих раніше алгоритмів:
+
+\begin{algorithm}[Адаптивний Корпелевич]
+    \label{algo:adapt-korpelevich}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1$, $\tau \in (0, 1)$, $\lambda \in (0, +\infty)$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок 1.} Обчислюємо
+    \begin{equation}
+        y_n = P_C (x_n - \lambda A x_n).
+    \end{equation}
+    
+    Якщо $x_n = y_n$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше переходимо на \medskip
+    
+    \textbf{Крок 2.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = P_C (x_n - \lambda A y_n).
+    \end{equation}
+    
+    \textbf{Крок 3.} Обчислюємо
+    \begin{equation}
+        \lambda_{n + 1} = \begin{cases}
+            \lambda_n, \text{ якщо } \sp{A x_n - A y_n, x_{n + 1} - y_n} \le 0, \\
+            \min \left\{ \lambda_n, \dfrac{\tau}{2} \dfrac{\no{x_n - y_n}^2 + \no{x_{n + 1} - y_n}^2}{\sp{A x_n - A y_n, x_{n + 1} - y_n}} \right\}, \text{ інакше}.
+        \end{cases}
+    \end{equation}
+    покладаємо $n \coloneqq n + 1$ і переходимо на \textbf{Крок 1.}
+\end{algorithm}
+
+\begin{remark}
+    У алгоритмі \ref{algo:adapt-korpelevich} можна робити і так:
+        \begin{equation}
+            \lambda_{n + 1} = \begin{cases}
+                \lambda_n, \text{ якщо } A x_n - A y_n = 0, \\
+                \min \left\{ \lambda_n, \tau \dfrac{\no{x_n - y_n}}{\no{A x_n - A y_n}} \right\}, \text{ інакше}.
+            \end{cases}
+        \end{equation}
+\end{remark}
+
+\begin{algorithm}[Адаптивний Tseng]
+    \label{algo:adapt-tseng}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1$, $\tau \in (0, 1)$, $\lambda \in (0, +\infty)$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок 1.} Обчислюємо
+    \begin{equation}
+        y_n = P_C (x_n - \lambda A x_n).
+    \end{equation}
+    
+    Якщо $x_n = y_n$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше переходимо на \medskip
+    
+    \textbf{Крок 2.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = y_n - \lambda (A y_n - A x_n),
+    \end{equation}
+    
+    \textbf{Крок 3.} Обчислюємо
+    \begin{equation}
+        \lambda_{n + 1} = \begin{cases}
+            \lambda_n, \text{ якщо } A x_n - A y_n = 0, \\
+            \min \left\{ \lambda_n, \tau \dfrac{\no{x_n - y_n}}{\no{A x_n - A y_n}} \right\}, \text{ інакше}.
+        \end{cases}
+    \end{equation}
+    покладаємо $n \coloneqq n + 1$ і переходимо на \textbf{Крок 1.}
+\end{algorithm}
+
+\begin{algorithm}[Адаптивний Попов]
+    \label{algo:adapt-popov}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1$, $y_0$, $\tau \in (0, \frac{1}{3})$, $\lambda \in (0, +\infty)$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок 1.} Обчислюємо
+    \begin{equation}
+        y_n = P_C (x_n - \lambda A y_{n - 1}).
+    \end{equation}
+        
+    \textbf{Крок 2.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = P_C (x_n - \lambda A y_n).
+    \end{equation}
+    
+    Якщо $x_{n + 1} = x_n = y_n$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше переходимо на \medskip
+    
+    \textbf{Крок 3.} Обчислюємо
+    \begin{equation}
+        \lambda_{n + 1} = \begin{cases}
+            \lambda_n, \text{ якщо } \sp{A y_{n - 1} - A y_n, x_{n + 1} - y_n} \le 0, \\
+            \min \left\{ \lambda_n, \dfrac{\tau}{2} \dfrac{\no{y_{n- 1} - y_n}^2 + \no{x_{n + 1} - y_n}^2}{\sp{A y_{n - 1} - A y_n, x_{n + 1} - y_n}} \right\}, \text{ інакше}.
+        \end{cases}
+    \end{equation}
+    покладаємо $n \coloneqq n + 1$ і переходимо на \textbf{Крок 1.}
+\end{algorithm}
+
+\begin{remark}
+    У алгоритмі \ref{algo:adapt-popov} можна робити і так:
+        \begin{equation}
+            \lambda_{n + 1} = \begin{cases}
+                \lambda_n, \text{ якщо } A y_{n - 1} - A y_n = 0, \\
+                \min \left\{ \lambda_n, \tau \dfrac{\no{y_{n - 1} - y_n}}{\no{A y_{n - 1} - A y_n}} \right\}, \text{ інакше}.
+            \end{cases}
+        \end{equation}
+\end{remark}
+
+
+\section{Алгоритм Маліцького---Tam'a}
+
+Зовсім нещодавно (у 2015-ому році) Юра Маліцький запропонував наступну схему:
+
+\begin{algorithm}[Маліцький---Tam]
+    \label{algo:malitsky-tam}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1, x_0 \in H$, $\lambda \in (0, \frac{1}{2L})$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = P_C (x_n - \lambda A x_n - \lambda (A x_n - A x_{n - 1})).
+    \end{equation}
+    
+    Якщо $x_{n + 1} = x_n = x_{n - 1}$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше покладаємо $n \coloneqq n + 1$, і повторюємо
+\end{algorithm}
+
+\begin{algorithm}[Адаптивний Маліцький---Tam]
+    \label{algo:adapt-malitsky-tam}
+    \textbf{Ініціалізація.} Вибираємо елементи $x_1, x_0 \in H$, $\lambda_1, \lambda_0 > 0$, $\tau \in (0, \frac{1}{2})$. Покладаємо $n = 1$. \medskip
+
+    \textbf{Крок 1.} Обчислюємо
+    \begin{equation}
+        x_{n + 1} = P_C (x_n - \lambda A x_n - \lambda (A x_n - A x_{n - 1})).
+    \end{equation}
+    
+    Якщо $x_{n + 1} = x_n = x_{n - 1}$ то зупиняємо алгоритм і $x_n$ --- розв'язок, інакше переходимо на \medskip
+
+    \textbf{Крок 2.} Обчислюємо
+    \begin{equation}
+        \lambda_{n + 1} = \min \left\{ \lambda_ n, \tau  \frac{\|x_{n + 1} - x_n\|}{\|A x_{n + 1} - A x_n} \right\},
+    \end{equation}
+    покладаємо $n \coloneqq n + 1$ і переходимо на \textbf{Крок 1.}
+\end{algorithm}

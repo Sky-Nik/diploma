@@ -3,7 +3,7 @@
 \input{sty/th.bw.sty}
 \input{sty/cmd.sty}
 
-\geometry{left=2.5cm,right=1.0cm,top=2.0cm,bottom=2.0cm}
+\geometry{left=2.5cm,right=1.0cm,top=2.0cm,bottom=2.0cm} 
 \hypersetup{colorlinks,linkcolor={blue},citecolor={blue!50!black},urlcolor={blue!80!black}}
 
 \setmainfont{Times New Roman}
@@ -14,7 +14,7 @@
 
 \renewcommand{\printtoctitle}{\centering\bfseries\MakeUppercase}
 \renewcommand{\printchapternonum}{\centering}
-\renewcommand{\printchaptername}[3]{\centering \textbf{\thechapter \ }}
+\renewcommand{\printchaptername}[3]{\centering \textsc{\textbf{\thechapter \ }}}
 \renewcommand{\chaptitlefont}{\normalfont\bfseries}
 \setsecheadstyle{\normalfont\bfseries}   
 \setsubsecheadstyle{\normalfont\bfseries}
@@ -31,60 +31,39 @@
 }
 \pagestyle{plain}
 
+\pretocmd{\section}{%
+  \ifnum\value{section}=0 \else\clearpage\fi
+}{}{}
+
 \begin{document}
 
 \pagenumbering{gobble}
 \input{tex/title} 
 \newpage
-\tableofcontents
-\newpage
 
 \pagenumbering{arabic}
-\setcounter{page}{3}
+\setcounter{page}{2}
+
+\input{tex/referat}
+\newpage
+
+\tableofcontents*
+\newpage
 
 \chapter{Вступ}
 \input{tex/intro}
-\newpage
 
-\chapter{Прості алгоритми}
-\input{tex/1/algos}
-\newpage
-\input{tex/1/code}
-\newpage
+\chapter{Алгоритми}
+\input{tex/algo}
 
-\chapter{Перша задача}
-\input{tex/1/problem}
-\newpage
-\input{tex/1/results}
-\newpage
+\chapter{Задачі}
+\input{tex/problem}
 
-\chapter{Друга задача}
-\input{tex/2/problem}
-\newpage
-\input{tex/2/results}
-\newpage
+\chapter{Результати}
+\input{tex/result}
 
-\chapter{Адаптивні алгоритми}
-\input{tex/adapt/algos}
-\newpage
-\input{tex/adapt/code}
-\newpage
-\input{tex/adapt/results}
-\newpage
-
-\chapter{Ще одна задача}
-\input{tex/4/problem}
-\newpage
-\input{tex/4/results}
-\newpage
-
-\chapter{Алгоритм Маліцького---Tam'a}
-\input{tex/malitsky-tam/algo}
-\newpage
-\input{tex/malitsky-tam/code}
-\newpage
-\input{tex/malitsky-tam/results}
-\newpage
+\chapter{Реалізація}
+\input{tex/code}
 
 \chapter{TODO}
 \input{tex/todo}

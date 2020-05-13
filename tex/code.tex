@@ -1,0 +1,97 @@
+Наведемо реалізацію усіх згаданих алгоритмів на мові програмування python.
+
+\begin{remark}
+    Ми обрали дизайн згідно з яким власне алгоритм знає мінімальний контекст задачі. Це означає, що для використання алгоритму користувач має визначити дві функції, одна з яких відповідатиме за обчислення оператора $A$, а друга --- за обчислення оператора $P_C$. Це надає користувачеві гнучкість у плані вибору способу обчислення операторів, яка буде помітна вже з перших тестових запусків.
+\end{remark}
+
+Загальний вигляд (за модулем назви і деяких параметрів) запуску алгоритма наступний:
+\begin{minted}[linenos,fontsize=\tiny]{python}
+solution, iteration_n, duration = korpelevich(
+    x_initial=np.ones(size), lambda_=0.4,
+    A=lambda x: a.dot(x), ProjectionOntoC=lambda x: x,
+    tolerance=1e-3, max_iterations=1e4, debug=True)
+\end{minted}
+
+Як бачимо, визначення способу обчислення операторів $A$ і $P_C$ лягає на плечі користувача. У багатьох випадках це доволі просто, хоча у деяких користувачеві доведеться написати більше коду і знадобитсья користуватися scipy.optimize або  аналогічним модулем для обчислення проекції. \medskip
+
+Ось, наприклад, клієнтський код для другої задачі:
+
+\begin{minted}[linenos,fontsize=\tiny]{python}
+def ProjectionOntoProbabilitySymplex(x: np.array) -> np.array:
+    dimensionality = x.shape[0]
+    x /= dimensionality
+    sorted_x = np.flip(np.sort(x))
+    prefix_sum = np.cumsum(sorted_x)
+    to_compare = sorted_x + (1 - prefix_sum) / np.arange(1, dimensionality + 1)
+    k = 0
+    for j in range(1, dimensionality): if to_compare[j] > 0: k = j
+    return dimensionality * np.maximum(np.zeros(dimensionality), x + (to_compare[k] - sorted_x[k]))
+
+solution, iteration_n, duration = korpelevich(...
+    A=lambda x: M.dot(x) + q,
+    ProjectionOntoC=ProjectionOntoProbabilitySymplex, ...)
+\end{minted}
+
+\newpage
+\section{Класичні алгоритми}
+
+\subsection{Корпелевич}
+\inputminted[linenos,firstline=8,fontsize=\tiny]{python}{src/core/korpelevich.py}
+
+\newpage
+\subsection{Tseng}
+\inputminted[linenos,firstline=8,lastline=42,fontsize=\tiny]{python}{src/core/tseng.py}
+
+\newpage
+\subsection{Кешований Tseng}
+\inputminted[linenos,firstline=45,fontsize=\tiny]{python}{src/core/tseng.py}
+
+\newpage
+\subsection{Попов}
+\inputminted[linenos,firstline=8,lastline=45,fontsize=\tiny]{python}{src/core/popov.py}
+
+\newpage
+\subsection{Кешований Попов}
+\inputminted[linenos,firstline=48,fontsize=\tiny]{python}{src/core/popov.py}
+
+\section{Адаптивні алгоритми}
+
+\subsection{Адаптивний Корпелевич}
+\inputminted[linenos,firstline=8,lastline=54,fontsize=\tiny]{python}{src/adaptive/korpelevich.py}
+
+\newpage
+\subsection{Кешований адаптивний Корпелевич}
+\inputminted[linenos,firstline=57,fontsize=\tiny]{python}{src/adaptive/korpelevich.py}
+
+\newpage
+\subsection{Адаптивний Tseng}
+\inputminted[linenos,firstline=8,lastline=53,fontsize=\tiny]{python}{src/adaptive/tseng.py}
+
+\newpage
+\subsection{Кешований адаптивний Tseng}
+\inputminted[linenos,firstline=56,fontsize=\tiny]{python}{src/adaptive/tseng.py}
+
+\newpage
+\subsection{Адаптивний Попов}
+\inputminted[linenos,firstline=8,lastline=57,fontsize=\tiny]{python}{src/adaptive/popov.py}
+
+\newpage
+\subsection{Кешований адаптивний Попов}
+\inputminted[linenos,firstline=60,fontsize=\tiny]{python}{src/adaptive/popov.py}
+
+\section{Алгоритм Маліцького---Tam'а}
+
+\subsection{Маліцький---Tam}
+\inputminted[linenos,firstline=8,lastline=41,fontsize=\tiny]{python}{src/core/malitskyi_tam.py}
+
+\newpage
+\subsection{Кешований Маліцький---Tam}
+\inputminted[linenos,firstline=44,fontsize=\tiny]{python}{src/core/malitskyi_tam.py}
+
+\newpage
+\subsection{Адаптивний Маліцький---Tam}
+\inputminted[linenos,firstline=8,lastline=53,fontsize=\tiny]{python}{src/adaptive/malitskyi_tam.py}
+
+\newpage
+\subsection{Кешований адаптивний Маліцький---Tam}
+\inputminted[linenos,firstline=56,fontsize=\tiny]{python}{src/adaptive/malitskyi_tam.py}
