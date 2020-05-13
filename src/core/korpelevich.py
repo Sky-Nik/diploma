@@ -1,10 +1,17 @@
-def tseng(x_initial: T,
-          lambda_: float,
-          A: Callable[[T], T],
-          ProjectionOntoC: Callable[[T], T],
-          tolerance: float = 1e-5,
-          max_iterations: int = 1e4,
-          debug: bool = False) -> T:
+import numpy as np
+import time
+
+from typing import Callable, TypeVar
+T = TypeVar('T')
+
+
+def korpelevich(x_initial: T,
+                lambda_: float,
+                A: Callable[[T], T],
+                ProjectionOntoC: Callable[[T], T],
+                tolerance: float = 1e-5,
+                max_iterations: int = 1e4,
+                debug: bool = False) -> T:
     start = time.time()
 
     # initialization
@@ -27,7 +34,7 @@ def tseng(x_initial: T,
             return x_current
 
         # step 2
-        x_next = y_current - lambda_ * (A(y_current) - A(x_current))
+        x_next = ProjectionOntoC(x_current - lambda_ * A(y_current))
 
         # next iteration
         iteration_n += 1
