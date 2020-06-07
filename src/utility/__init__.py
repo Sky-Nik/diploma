@@ -1,5 +1,7 @@
 from .norm import norm
 
+from .runner import run
+
 from .save import save_values_to_image, save_intervals_to_image, \
                   save_values_to_table, save_intervals_to_table
 
