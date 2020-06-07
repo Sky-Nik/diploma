@@ -1,42 +1,40 @@
 import numpy as np
 import time
+from typing import Callable, TypeVar, Tuple
+from ..utility import norm
 
-from typing import Callable, TypeVar
 T = TypeVar('T')
 
 
 def korpelevich(x_initial: T,
                 lambda_: float,
-                A: Callable[[T], T],
-                ProjectionOntoC: Callable[[T], T],
-                tolerance: float = 1e-5,
-                max_iterations: int = 1e4,
-                debug: bool = False) -> T:
+                operator: Callable[[T], T],
+                projector: Callable[[T], T],
+                tolerance: float = 1e-6,
+                max_iterations: int = 1e3,
+                **kwargs) -> Tuple[T, int, float]:
     start = time.time()
 
     # initialization
-    iteration_n = 1
-    x_current = x_initial
+    iteration_number = 1
+    x_current, x_next = x_initial, None
+    y_current = None
 
     while True:
         # step 1
-        y_current = ProjectionOntoC(x_current - lambda_ * A(x_current))
+        y_current = projector(x_current - lambda_ * operator(x_current))
 
         # stopping criterion
-        if (np.linalg.norm(x_current - y_current) < tolerance or
-            iteration_n == max_iterations):
-            if debug:
-                end = time.time()
-                duration = end - start
-                print(f'Took {iteration_n} iterations '
-                      f'and {duration:.2f} seconds to converge.')
-                return x_current, iteration_n, duration
-            return x_current
+        if norm(x_current - y_current) < tolerance or \
+            iteration_number == max_iterations:
+            end = time.time()
+            duration = end - start
+            return x_current, iteration_number, duration
 
         # step 2
-        x_next = ProjectionOntoC(x_current - lambda_ * A(y_current))
+        x_next = projector(x_current - lambda_ * operator(y_current))
 
         # next iteration
-        iteration_n += 1
+        iteration_number += 1
         x_current, x_next = x_next, None
         y_current = None

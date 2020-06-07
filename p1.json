@@ -1,0 +1,33 @@
+{
+    "solver":{
+        "algorithms":[
+            "korpelevich",
+            "tseng",
+            "cached_tseng",
+            "popov",
+            "cached_popov",
+            "malitskyi_tam",
+            "cached_malitskyi_tam"
+        ],
+        "sizes":[
+            1000,
+            2000,
+            5000,
+            10000
+        ],
+        "parameters":{
+            "initial":1,
+            "tolerance":0.001,
+            "max_iterations":10000
+        },
+        "record":{
+            "iterations":true,
+            "times":true
+        }
+    },
+    "problem":{
+        "L":1,
+        "operator":"a",
+        "orojector":"f"
+    }
+}

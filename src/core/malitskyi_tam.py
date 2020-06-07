@@ -1,79 +1,74 @@
 import numpy as np
 import time
+from typing import Callable, TypeVar, Tuple
+from ..utility import norm
 
-from typing import Callable, TypeVar
 T = TypeVar('T')
 
 
 def malitskyi_tam(x0_initial: T,
                   x1_initial: T,
                   lambda_: float,
-                  A: Callable[[T], T],
-                  ProjectionOntoC: Callable[[T], T],
-                  tolerance: float = 1e-5,
-                  max_iterations: int = 1e4,
-                  debug: bool = False) -> T:
+                  operator: Callable[[T], T],
+                  projector: Callable[[T], T],
+                  tolerance: float = 1e-6,
+                  max_iterations: int = 1e3,
+                  **kwargs) -> Tuple[T, int, float]:
     start = time.time()
 
     # initialization
-    iteration_n = 1
+    iteration_number = 1
     x_previous, x_current, x_next = x0_initial, x1_initial, None
 
     while True:
         # step
-        x_next = ProjectionOntoC(x_current - lambda_ * A(x_current) -
-                                 lambda_ * (A(x_current) - A(x_previous)))
+        x_next = projector(x_current - lambda_ * operator(x_current) - 
+            lambda_ * (operator(x_current) - operator(x_previous)))
 
         # stopping criterion
-        if (np.linalg.norm(x_current - x_previous) < tolerance and
-            np.linalg.norm(x_next - x_current) < tolerance or
-            iteration_n == max_iterations):
-            if debug:
-                end = time.time()
-                duration = end - start
-                print(f'Took {iteration_n} iterations '
-                      f'and {duration:.2f} seconds to converge.')
-                return x_current, iteration_n, duration
-            return x_current
+        if norm(x_current - x_previous) < tolerance and \
+            norm(x_next - x_current) < tolerance or \
+            iteration_number == max_iterations:
+            end = time.time()
+            duration = end - start
+            return x_current, iteration_number, duration
 
         # next iteration
-        iteration_n += 1
+        iteration_number += 1
         x_previous, x_current, x_next = x_current, x_next, None
 
 
 def cached_malitskyi_tam(x0_initial: T,
                          x1_initial: T,
                          lambda_: float,
-                         A: Callable[[T], T],
-                         ProjectionOntoC: Callable[[T], T],
-                         tolerance: float = 1e-5,
-                         max_iterations: int = 1e4,
-                         debug: bool = False) -> T:
+                         operator: Callable[[T], T],
+                         projector: Callable[[T], T],
+                         tolerance: float = 1e-6,
+                         max_iterations: int = 1e3,
+                         **kwargs) -> Tuple[T, int, float]:
     start = time.time()
 
     # initialization
-    iteration_n = 1
+    iteration_number = 1
     x_previous, x_current, x_next = x0_initial, x1_initial, None
-    A_x_previous, A_x_current, A_x_next = A(x_previous), A(x_current), None
+    operator_x_previous, operator_x_current = \
+        operator(x_previous), operator(x_current)
 
     while True:
         # step
-        x_next = ProjectionOntoC(x_current - lambda_ * A_x_current -
-                                 lambda_ * (A_x_current - A_x_previous))
+        x_next = projector(x_current - lambda_ * operator_x_current -
+            lambda_ * (operator_x_current - operator_x_previous))
 
         # stopping criterion
-        if (np.linalg.norm(x_current - x_previous) < tolerance and
-            np.linalg.norm(x_next - x_current) < tolerance or
-            iteration_n == max_iterations):
-            if debug:
-                end = time.time()
-                duration = end - start
-                print(f'Took {iteration_n} iterations '
-                      f'and {duration:.2f} seconds to converge.')
-                return x_current, iteration_n, duration
-            return x_current
+        if norm(x_current - x_previous) < tolerance and \
+            norm(x_next - x_current) < tolerance or \
+            iteration_number == max_iterations:
+            end = time.time()
+            duration = end - start
+            return x_current, iteration_number, duration
 
         # next iteration
-        iteration_n += 1
-        A_x_previous, A_x_current, A_x_next = A_x_current, A(x_next), None
+        iteration_number += 1
+        operator_x_previous, operator_x_current = \
+            operator_x_current, operator(x_next)
         x_previous, x_current, x_next = x_current, x_next, None

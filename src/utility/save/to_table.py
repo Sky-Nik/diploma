@@ -1,7 +1,7 @@
 import codecs
 
 
-def save_values_to_table(results, sizes, fn, caption):
+def save_values_to_table(results, sizes, fn, tp):
     with codecs.open(f'tbl/{fn}.tex', 'w', 'utf-8') as out:
         # head
         out.write('\\begin{table}[H]\n')
@@ -18,11 +18,14 @@ def save_values_to_table(results, sizes, fn, caption):
         out.write('\t\\end{tabular}\n')
 
         # tail
-        out.write('\t\\caption{' + caption + '}\n')
+        if tp == 'time':
+            out.write('\t\\caption{Час виконання, секунд}\n')
+        if tp == 'iter':
+            out.write('\t\\caption{Число ітерацій}\n')
         out.write('\\end{table}\n')
 
 
-def save_intervals_to_table(results, sizes, fn, caption):
+def save_intervals_to_table(results, sizes, fn, tp):
     with codecs.open(f'tbl/{fn}.tex', 'w', 'utf-8') as out:
         # head
         out.write('\\begin{table}[H]\n')
@@ -39,5 +42,8 @@ def save_intervals_to_table(results, sizes, fn, caption):
         out.write('\t\\end{tabular}\n')
 
         # tail
-        out.write('\t\\caption{' + caption + '}\n')
+        if tp == 'time':
+            out.write('\t\\caption{Час виконання, секунд}\n')
+        if tp == 'iter':
+            out.write('\t\\caption{Число ітерацій}\n')
         out.write('\\end{table}\n')
