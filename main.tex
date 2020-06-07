@@ -1,10 +1,10 @@
-\documentclass[a4paper,14pt,openany,oneside,oldfontcommands]{memoir}
+\documentclass[a4paper,14pt,openany,twoside,oldfontcommands]{memoir}
 \input{sty/use.sty}
 \input{sty/th.bw.sty}
 \input{sty/cmd.sty}
 
 \geometry{left=2.5cm,right=1.0cm,top=2.0cm,bottom=2.0cm} 
-\hypersetup{colorlinks,linkcolor={blue},citecolor={blue!50!black},urlcolor={blue!80!black}}
+\hypersetup{unicode,colorlinks,linkcolor={blue},citecolor={blue!50!black},urlcolor={blue!80!black}}
 
 \setmainfont{Times New Roman}
 \setlength{\parindent}{1.27cm}
@@ -38,7 +38,7 @@
 \begin{document}
 
 \pagenumbering{gobble}
-\input{tex/title} 
+\input{tex/title}
 \newpage
 
 \pagenumbering{arabic}
@@ -47,6 +47,7 @@
 \input{tex/referat}
 \newpage
 
+\setcounter{tocdepth}{3}
 \tableofcontents*
 \newpage
 
