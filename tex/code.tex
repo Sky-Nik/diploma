@@ -5,7 +5,7 @@
 \end{remark}
 
 Загальний вигляд (за модулем назви і деяких параметрів) запуску алгоритма наступний:
-\begin{minted}[linenos,fontsize=\footnotesize]{python}
+\begin{minted}[linenos,fontsize=\tiny]{python}
 solution, iteration_n, duration = korpelevich(
     x_initial=np.ones(size), lambda_=0.4,
     operator=lambda x: a.dot(x), projector=lambda x: x,
@@ -16,7 +16,7 @@ solution, iteration_n, duration = korpelevich(
 
 Ось, наприклад, клієнтський код для другої задачі:
 
-\begin{minted}[linenos,fontsize=\footnotesize]{python}
+\begin{minted}[linenos,fontsize=\tiny]{python}
 def ProjectionOntoProbabilitySymplex(x: np.array) -> np.array:
     dimensionality = x.shape[0]
     x /= dimensionality
@@ -37,58 +37,50 @@ solution, iteration_n, duration = korpelevich(...
 \section{Класичні алгоритми}
 
 \subsection{Корпелевич}
-\inputminted[linenos,firstline=09,lastline=40,fontsize=\footnotesize]{python}{src/core/korpelevich.py}
+\inputminted[linenos,firstline=09,lastline=40,fontsize=\tiny]{python}{src/core/korpelevich.py}
 
 \newpage\subsection{Tseng}
-\inputminted[linenos,firstline=09,lastline=41,fontsize=\footnotesize]{python}{src/core/tseng.py}
+\inputminted[linenos,firstline=09,lastline=41,fontsize=\tiny]{python}{src/core/tseng.py}
 
 \newpage\subsection{Кешований Tseng}
-\inputminted[linenos,firstline=44,lastline=77,fontsize=\footnotesize]{python}{src/core/tseng.py}
+\inputminted[linenos,firstline=44,lastline=77,fontsize=\tiny]{python}{src/core/tseng.py}
 
 \newpage\subsection{Попов}
-\inputminted[linenos,firstline=09,lastline=42,fontsize=\footnotesize]{python}{src/core/popov.py}
+\inputminted[linenos,firstline=09,lastline=42,fontsize=\tiny]{python}{src/core/popov.py}
 
 \newpage\subsection{Кешований Попов}
-\inputminted[linenos,firstline=45,lastline=81,fontsize=\footnotesize]{python}{src/core/popov.py}
+\inputminted[linenos,firstline=45,lastline=81,fontsize=\tiny]{python}{src/core/popov.py}
 
 \section{Адаптивні алгоритми}
 
 \subsection{Адаптивний Корпелевич}
-\inputminted[linenos,firstline=8,lastline=54,fontsize=\tiny]{python}{src/adaptive/korpelevich.py}
+\inputminted[linenos,firstline=09,lastline=52,fontsize=\tiny]{python}{src/adaptive/korpelevich.py}
 
-\newpage
-\subsection{Кешований адаптивний Корпелевич}
-\inputminted[linenos,firstline=57,fontsize=\tiny]{python}{src/adaptive/korpelevich.py}
+\newpage\subsection{Кешований адаптивний Корпелевич}
+\inputminted[linenos,firstline=56,lastline=102,fontsize=\tiny]{python}{src/adaptive/korpelevich.py}
 
-\newpage
-\subsection{Адаптивний Tseng}
-\inputminted[linenos,firstline=8,lastline=53,fontsize=\tiny]{python}{src/adaptive/tseng.py}
+\newpage\subsection{Адаптивний Tseng}
+\inputminted[linenos,firstline=09,lastline=52,fontsize=\tiny]{python}{src/adaptive/tseng.py}
 
-\newpage
-\subsection{Кешований адаптивний Tseng}
-\inputminted[linenos,firstline=56,fontsize=\tiny]{python}{src/adaptive/tseng.py}
+\newpage\subsection{Кешований адаптивний Tseng}
+\inputminted[linenos,firstline=55,lastline=102,fontsize=\tiny]{python}{src/adaptive/tseng.py}
 
-\newpage
-\subsection{Адаптивний Попов}
-\inputminted[linenos,firstline=8,lastline=57,fontsize=\tiny]{python}{src/adaptive/popov.py}
+\newpage\subsection{Адаптивний Попов}
+\inputminted[linenos,firstline=09,lastline=54,fontsize=\tiny]{python}{src/adaptive/popov.py}
 
-\newpage
-\subsection{Кешований адаптивний Попов}
-\inputminted[linenos,firstline=60,fontsize=\tiny]{python}{src/adaptive/popov.py}
+\newpage\subsection{Кешований адаптивний Попов}
+\inputminted[linenos,firstline=57,lastline=105,fontsize=\tiny]{python}{src/adaptive/popov.py}
 
 \section{Алгоритм Маліцького---Tam'а}
 
 \subsection{Маліцький---Tam}
-\inputminted[linenos,firstline=8,lastline=41,fontsize=\tiny]{python}{src/core/malitskyi_tam.py}
+\inputminted[linenos,firstline=09,lastline=38,fontsize=\tiny]{python}{src/core/malitskyi_tam.py}
 
-\newpage
-\subsection{Кешований Маліцький---Tam}
-\inputminted[linenos,firstline=44,fontsize=\tiny]{python}{src/core/malitskyi_tam.py}
+\newpage\subsection{Кешований Маліцький---Tam}
+\inputminted[linenos,firstline=41,lastline=74,fontsize=\tiny]{python}{src/core/malitskyi_tam.py}
 
-\newpage
-\subsection{Адаптивний Маліцький---Tam}
-\inputminted[linenos,firstline=8,lastline=53,fontsize=\tiny]{python}{src/adaptive/malitskyi_tam.py}
+\newpage\subsection{Адаптивний Маліцький---Tam}
+\inputminted[linenos,firstline=09,lastline=52,fontsize=\tiny]{python}{src/adaptive/malitskyi_tam.py}
 
-\newpage
-\subsection{Кешований адаптивний Маліцький---Tam}
-\inputminted[linenos,firstline=56,fontsize=\tiny]{python}{src/adaptive/malitskyi_tam.py}
+\newpage\subsection{Кешований адаптивний Маліцький---Tam}
+\inputminted[linenos,firstline=55,lastline=103,fontsize=\tiny]{python}{src/adaptive/malitskyi_tam.py}
