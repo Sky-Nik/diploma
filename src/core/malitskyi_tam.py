@@ -9,10 +9,10 @@ T = TypeVar('T')
 def malitskyi_tam(x0_initial: T,
                   x1_initial: T,
                   lambda_: float,
-                  operator: Callable[[T], T],
-                  projector: Callable[[T], T],
                   tolerance: float = 1e-6,
                   max_iterations: int = 1e3,
+                  operator: Callable[[T], T] = lambda x: x,
+                  projector: Callable[[T], T] = lambda x: x,
                   **kwargs) -> Tuple[T, int, float]:
     start = time.time()
 
@@ -41,10 +41,10 @@ def malitskyi_tam(x0_initial: T,
 def cached_malitskyi_tam(x0_initial: T,
                          x1_initial: T,
                          lambda_: float,
-                         operator: Callable[[T], T],
-                         projector: Callable[[T], T],
                          tolerance: float = 1e-6,
                          max_iterations: int = 1e3,
+                         operator: Callable[[T], T] = lambda x: x,
+                         projector: Callable[[T], T] = lambda x: x,
                          **kwargs) -> Tuple[T, int, float]:
     start = time.time()
 

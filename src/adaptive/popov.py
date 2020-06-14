@@ -10,10 +10,10 @@ def adaptive_popov(x_initial: T,
                    y_initial: T,
                    tau: float,
                    lambda_initial: float,
-                   operator: Callable[[T], T],
-                   projector: Callable[[T], T],
-                   tolerance: float = 1e-5,
-                   max_iterations: int = 1e4,
+                   tolerance: float = 1e-6,
+                   max_iterations: int = 1e3,
+                   operator: Callable[[T], T] = lambda x: x,
+                   projector: Callable[[T], T] = lambda x: x,
                    **kwargs) -> Tuple[T, int, float]:
     start = time.time()
 
@@ -58,10 +58,10 @@ def cached_adaptive_popov(x_initial: T,
                           y_initial: T,
                           tau: float,
                           lambda_initial: float,
-                          operator: Callable[[T], T],
-                          projector: Callable[[T], T],
-                          tolerance: float = 1e-5,
-                          max_iterations: int = 1e4,
+                          tolerance: float = 1e-6,
+                          max_iterations: int = 1e3,
+                          operator: Callable[[T], T] = lambda x: x,
+                          projector: Callable[[T], T] = lambda x: x,
                           **kwargs) -> Tuple[T, int, float]:
     start = time.time()
 
