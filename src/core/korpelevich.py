@@ -9,7 +9,7 @@ T = TypeVar('T')
 def korpelevich(x_initial: T,
                 lambda_: float,
                 tolerance: float = 1e-6,
-                max_iterations: int = 1e3,
+                max_iterations: int = 1e4,
                 operator: Callable[[T], T] = lambda x: x,
                 projector: Callable[[T], T] = lambda x: x,
                 **kwargs) -> Tuple[T, int, float]:
