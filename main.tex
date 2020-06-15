@@ -2,6 +2,7 @@
 \input{sty/use.sty}
 \input{sty/th.bw.sty}
 \input{sty/cmd.sty}
+\usepackage{pdflscape}
 
 \geometry{left=2.5cm,right=1.0cm,top=2.0cm,bottom=2.0cm} 
 \hypersetup{unicode,colorlinks,linkcolor={blue},citecolor={blue!50!black},urlcolor={blue!80!black}}
@@ -60,15 +61,17 @@
 \chapter{Задачі}
 \input{tex/problem}
 
+\begin{landscape}
 \chapter{Результати}
 \input{tex/result}
+\end{landscape}
 
 \chapter{Висновки}
 \input{tex/conclusions}
 
 \newpage
 \nocite{*}
-\bibliographystyle{unsrt}
+\bibliographystyle{gost780s}
 \bibliography{tex/all.bib}
 
 \chapter{Реалізація}
