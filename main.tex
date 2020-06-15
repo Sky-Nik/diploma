@@ -74,10 +74,14 @@
 \bibliographystyle{gost780s}
 \bibliography{tex/all.bib}
 
-\chapter{Реалізація}
-\input{tex/code}
+\appendix
 
-\chapter{TODO}
-\input{tex/todo}
+\addtocontents{toc}{\setlength\cftchapternumwidth{5.5em}}
+\renewcommand\thechapter{Додаток А}
+
+\chapter{Реалізація}
+\renewcommand\thechapter{A}
+
+\input{tex/code}
 
 \end{document}
